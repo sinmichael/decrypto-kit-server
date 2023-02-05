@@ -21,6 +21,9 @@ export class Switch extends BaseEntity {
   @Column({ default: false })
   isMeraki: boolean;
 
+  @Column({ default: false })
+  isRange: boolean;
+
   @Column({ nullable: true })
   macAddress: string;
 
@@ -33,7 +36,7 @@ export class Switch extends BaseEntity {
   @Column({ nullable: true })
   ipAddressRange2: string;
 
-  @Column()
+  @Column({ nullable: true })
   model: string;
 
   @Column({ default: 5 })
