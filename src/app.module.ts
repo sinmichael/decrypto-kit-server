@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { MinersModule } from './miners/miners.module';
 import { SettingsModule } from './settings/settings.module';
 import { SwitchesModule } from './switches/switches.module';
+import { JobsModule } from './jobs/jobs.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { SwitchesModule } from './switches/switches.module';
     MinersModule,
     SettingsModule,
     SwitchesModule,
+    JobsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
