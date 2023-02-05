@@ -6,7 +6,8 @@ export class JobsService {
   constructor(private readonly switchesService: SwitchesService) {}
 
   @Cron('*/5 * * * * *')
-  fetch() {
-    this.switchesService.getMinersFromSwitch(1);
+  async fetch() {
+    const miners = await this.switchesService.getMinersFromSwitch(1);
+    console.log(miners);
   }
 }
