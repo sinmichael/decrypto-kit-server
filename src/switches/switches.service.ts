@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { InjectRepository } from '@nestjs/typeorm';
 import { lastValueFrom, map } from 'rxjs';
@@ -13,14 +13,15 @@ export class SwitchesService {
     @InjectRepository(Switch)
     private switchRepository: Repository<Switch>,
     private httpService: HttpService,
+    private readonly logger: Logger,
   ) {}
 
   create(createSwitchDto: CreateSwitchDto) {
     return 'This action adds a new switch';
   }
 
-  findAll() {
-    return `This action returns all switches`;
+  async findAll() {
+    return await this.switchRepository.find({ order: { lastChecked: 'ASC' } });
   }
 
   findOne(id: number) {
@@ -37,7 +38,8 @@ export class SwitchesService {
 
   async getMinersFromSwitch(id: number) {
     const switch_ = await this.switchRepository.findOne({ where: { id: id } });
-    const timeSpan = 80;
+    const timeSpan = 1800;
+    const ret = [] as any;
 
     if (switch_.isMeraki) {
       const apiKeyMeraki = process.env.API_KEY_MERAKI;
@@ -57,15 +59,34 @@ export class SwitchesService {
             .pipe(map((response: any) => response.data)),
         )) as any;
 
-        return response.sort((a, b) => a.switchport - b.switchport);
+        response.sort((a, b) => a.switchport - b.switchport);
+
+        for (const client of response) {
+          ret.push({
+            id: client.id,
+            macAddress: client.mac,
+            description: client.description,
+            mdnsName: client.mdnsName,
+            dhcpHostname: client.dhcpHostname,
+            user: client.user,
+            ipAddress: client.ip,
+            vlan: client.vlan,
+            switchPort: client.switchport !== null ? +client.switchport : 0,
+            usage: client.usage,
+          });
+        }
+
+        return ret;
       } catch (error) {
-        // logger.error(
-        //   `Something went wrong. Error number: ${error.errno}, Code: ${error.code}`,
-        // );
+        this.logger.error(
+          `Something went wrong. Error number: ${error.errno}, Code: ${error.code}`,
+        );
         return [];
       }
-    } else {
-      return [];
+    }
+
+    if (switch_.isRange) {
+      //
     }
   }
 }

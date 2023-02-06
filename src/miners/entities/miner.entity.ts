@@ -15,11 +15,11 @@ export class Miner extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  macAddress: string;
-
-  @Column({ unique: true })
+  @Column({ unique: true, type: 'inet' })
   ipAddress: string;
+
+  @Column({ nullable: true })
+  macAddress: string;
 
   @Column({ nullable: true })
   type: string;
@@ -34,13 +34,10 @@ export class Miner extends BaseEntity {
   switchPort: number;
 
   @Column({ nullable: true })
-  rack: string;
+  x: number;
 
   @Column({ nullable: true })
-  shelf: string;
-
-  @Column({ nullable: true })
-  spot: string;
+  y: number;
 
   @Column()
   status: string;
@@ -55,75 +52,75 @@ export class Miner extends BaseEntity {
   consumption: number;
 
   @Column()
-  elapsed: string;
+  elapsed: number;
 
-  @Column()
+  @Column({ nullable: true })
   chain1Acn: string;
 
-  @Column()
+  @Column({ nullable: true })
   chain2Acn: string;
 
-  @Column()
+  @Column({ nullable: true })
   chain3Acn: string;
 
   @Column({ nullable: true })
   acnAvg: string;
 
-  @Column()
+  @Column({ nullable: true })
   chain1Temp: string;
 
-  @Column()
+  @Column({ nullable: true })
   chain2Temp: string;
 
-  @Column()
+  @Column({ nullable: true })
   chain3Temp: string;
 
-  @Column({ default: 'N/A' })
+  @Column({ nullable: true })
   chain1TempPcb: string;
 
-  @Column({ default: 'N/A' })
+  @Column({ nullable: true })
   chain2TempPcb: string;
 
-  @Column({ default: 'N/A' })
+  @Column({ nullable: true })
   chain3TempPcb: string;
 
   @Column({ nullable: true })
   tempAvg: string;
 
-  @Column()
+  @Column({ nullable: true })
   chain1Acs: string;
 
-  @Column()
+  @Column({ nullable: true })
   chain2Acs: string;
 
-  @Column()
+  @Column({ nullable: true })
   chain3Acs: string;
 
   @Column({ nullable: true })
-  fan1: string;
+  fan1: number;
 
   @Column({ nullable: true })
-  fan2: string;
+  fan2: number;
 
   @Column({ nullable: true })
-  fan3: string;
+  fan3: number;
 
   @Column({ nullable: true })
-  fan4: string;
+  fan4: number;
 
   @Column({ nullable: true })
   fanAvg: string;
 
-  @Column()
+  @Column({ nullable: true })
   pool1: string;
 
-  @Column()
+  @Column({ nullable: true })
   pool2: string;
 
-  @Column()
+  @Column({ nullable: true })
   pool3: string;
 
-  @Column({ default: 'N/A' })
+  @Column({ nullable: true })
   pool4: string;
 
   @Column({ default: 0 })
@@ -294,7 +291,7 @@ export class Miner extends BaseEntity {
   @Column({ type: 'numeric', precision: 32, default: 0 })
   pool2remoteFailures: number;
 
-  @Column({ default: 'N/A' })
+  @Column({ nullable: true })
   pool2diff: string;
 
   @Column({ type: 'numeric', precision: 32, default: 0 })
@@ -318,7 +315,7 @@ export class Miner extends BaseEntity {
   @Column({ default: false })
   pool2stratumActive: boolean;
 
-  @Column({ default: 'N/A' })
+  @Column({ nullable: true })
   pool2stratumUrl: string;
 
   @Column({ type: 'numeric', precision: 32, default: 0 })
@@ -348,7 +345,7 @@ export class Miner extends BaseEntity {
   @Column({ type: 'numeric', precision: 32, default: 0 })
   pool3remoteFailures: number;
 
-  @Column({ default: 'N/A' })
+  @Column({ nullable: true })
   pool3diff: string;
 
   @Column({ type: 'numeric', precision: 32, default: 0 })
@@ -372,7 +369,7 @@ export class Miner extends BaseEntity {
   @Column({ default: false })
   pool3stratumActive: boolean;
 
-  @Column({ default: 'N/A' })
+  @Column({ nullable: true })
   pool3stratumUrl: string;
 
   @Column({ type: 'numeric', precision: 32, default: 0 })
@@ -402,7 +399,7 @@ export class Miner extends BaseEntity {
   @Column({ type: 'numeric', precision: 32, default: 0 })
   pool4remoteFailures: number;
 
-  @Column({ default: 'N/A' })
+  @Column({ nullable: true })
   pool4diff: string;
 
   @Column({ type: 'numeric', precision: 32, default: 0 })
@@ -426,7 +423,7 @@ export class Miner extends BaseEntity {
   @Column({ default: false })
   pool4stratumActive: boolean;
 
-  @Column({ default: 'N/A' })
+  @Column({ nullable: true })
   pool4stratumUrl: string;
 
   @Column({ type: 'numeric', precision: 32, default: 0 })
