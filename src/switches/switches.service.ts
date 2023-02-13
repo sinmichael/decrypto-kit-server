@@ -38,7 +38,7 @@ export class SwitchesService {
 
   async getMinersFromSwitch(id: number) {
     const switch_ = await this.switchRepository.findOne({ where: { id: id } });
-    const timeSpan = 1800;
+    const timeSpan = 300;
     const ret = [] as any;
 
     if (switch_.isMeraki) {
