@@ -1,8 +1,13 @@
 import { Injectable } from '@nestjs/common';
+import { StatsHelper } from './utils/stats-helper';
 
 @Injectable()
 export class AppService {
-  getHello(): string {
-    return 'Hello World!';
+  constructor(
+    private readonly statsHelper: StatsHelper,
+  ) {}
+
+  async getTest() {
+    return await this.statsHelper.getCurrentMinerTotalStats();
   }
 }

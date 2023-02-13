@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
@@ -7,6 +7,9 @@ import { MinersModule } from './miners/miners.module';
 import { SettingsModule } from './settings/settings.module';
 import { SwitchesModule } from './switches/switches.module';
 import { JobsModule } from './jobs/jobs.module';
+import { StatsHelper } from './utils/stats-helper';
+import { Miner } from './miners/entities/miner.entity';
+import { Switch } from './switches/entities/switch.entity';
 
 @Module({
   imports: [
@@ -26,12 +29,13 @@ import { JobsModule } from './jobs/jobs.module';
       migrationsRun: true,
       migrations: ['dist/migrations/*.{ts,js}'],
     }),
+    TypeOrmModule.forFeature([Switch, Miner]),
     MinersModule,
     SettingsModule,
     SwitchesModule,
     JobsModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [Logger, AppService, StatsHelper],
 })
 export class AppModule {}
