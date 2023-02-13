@@ -31,6 +31,7 @@ export class JobsService {
 
     const switches = await this.switchesService.findAll();
     for (const switch_ of switches) {
+      this.logger.log(`Fetching miners from ${switch_.name}`);
       const miners = await this.switchesService.getMinersFromSwitch(switch_.id);
       for (const miner of miners) {
         const minerData = await this.minerHelper.getDeviceDetails(
