@@ -2,33 +2,30 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { MinersService } from './miners.service';
 import { CreateMinerDto } from './dto/create-miner.dto';
 import { UpdateMinerDto } from './dto/update-miner.dto';
+import { Paginate, Paginated, PaginateQuery } from 'nestjs-paginate';
+import { Miner } from './entities/miner.entity';
 
 @Controller('miners')
 export class MinersController {
   constructor(private readonly minersService: MinersService) {}
-
-  @Post()
-  create(@Body() createMinerDto: CreateMinerDto) {
-    return this.minersService.create(createMinerDto);
-  }
 
   @Get()
   findAll() {
     return this.minersService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.minersService.findOne(+id);
+  @Get('paginate')
+  paginate(@Paginate() query: PaginateQuery,): Promise<Paginated<Miner>> {
+    return this.minersService.paginate(query);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMinerDto: UpdateMinerDto) {
-    return this.minersService.update(+id, updateMinerDto);
+  @Get(':ipAddress')
+  findByIpAddress(@Param('ipAddress') ipAddress: string) {
+    return this.minersService.findByIpAddress(ipAddress);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.minersService.remove(+id);
+  @Get(':ipAddress/raw')
+  findByIpAddressRaw(@Param('ipAddress') ipAddress: string) {
+    return this.minersService.findByIpAddressRaw(ipAddress);
   }
 }

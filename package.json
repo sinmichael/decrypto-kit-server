@@ -1,6 +1,6 @@
 {
   "name": "decrypto-kit-server",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "",
   "author": "",
   "private": true,
@@ -37,7 +37,7 @@
     "moment": "^2.29.4",
     "nest-access-control": "^2.2.0",
     "nest-winston": "^1.8.0",
-    "nestjs-paginate": "^4.8.0",
+    "nestjs-paginate": "^4.10.0",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",
     "pg": "^8.9.0",
@@ -47,6 +47,7 @@
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
     "typeorm": "^0.3.11",
+    "uuidv4": "^6.2.13",
     "winston": "^3.8.2"
   },
   "devDependencies": {

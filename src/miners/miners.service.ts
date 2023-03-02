@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import moment from 'moment';
+import { paginate, Paginated, PaginateQuery } from 'nestjs-paginate';
 import { SwitchesService } from 'src/switches/switches.service';
 import { MinerHelper } from 'src/utils/miner-helper';
 import { Repository } from 'typeorm';
@@ -14,7 +16,7 @@ export class MinersService {
     private minerRepository: Repository<Miner>,
     private readonly switchesService: SwitchesService,
     private readonly minerHelper: MinerHelper,
-  ) {}
+  ) { }
 
   async create(createMinerDto: CreateMinerDto) {
     const {
@@ -330,6 +332,19 @@ export class MinersService {
 
   findAll() {
     return this.minerHelper.getDeviceDetails('10.12.10.92');
+  }
+
+  async paginate(query: PaginateQuery): Promise<Paginated<Miner>> {
+    const response = await paginate(query, this.minerRepository.createQueryBuilder(), { sortableColumns: ['type', 'ghs'], defaultSortBy: [['updatedAt', 'DESC']] })
+    return response;
+  }
+
+  async findByIpAddress(ipAddress: string) {
+    return await this.minerHelper.getDeviceDetails(ipAddress);
+  }
+
+  async findByIpAddressRaw(ipAddress: string) {
+    return await this.minerHelper.getDeviceDetails(ipAddress, undefined, true);
   }
 
   findOne(id: number) {

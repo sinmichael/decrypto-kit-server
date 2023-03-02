@@ -19,9 +19,9 @@ async function bootstrap() {
 
   const app = await NestFactory.create(AppModule, {
     cors: true,
-    logger: WinstonModule.createLogger({
-      transports: [transportConsole],
-    }),
+    // logger: WinstonModule.createLogger({
+    //   transports: [transportConsole],
+    // }),
   });
   app.setGlobalPrefix('api');
   await app.listen(port);
